@@ -898,6 +898,29 @@ namespace TestCreateProvider {
     ReactDOM.render(<Combined />, document.body);
 }
 
+namespace TestCreateProviderWithSpecificAction {
+    const STORE_KEY = 'myStore';
+    const MyStoreProvider = createProvider(STORE_KEY);
+
+    interface State { a: number };
+    interface FooAction { type: 'foo', test: 'foo' };
+    interface BarAction { type: 'bar', test: 'bar' };
+    type StoreAction = FooAction | BarAction;
+    const store = createStore<State, StoreAction, {}, {}>(() => ({ a: 1 }));
+
+    const Combined = () => (
+        <Provider store={store}>
+            <MyStoreProvider store={store}>
+                <div />
+            </MyStoreProvider>
+        </Provider>
+    );
+
+    // This renders:
+    // <div></div>
+    ReactDOM.render(<Combined />, document.body);
+}
+
 namespace TestWithoutTOwnPropsDecoratedInference {
 
     interface ForwardedProps {
@@ -933,7 +956,7 @@ namespace TestWithoutTOwnPropsDecoratedInference {
     // This should compile
     React.createElement(ConnectedWithOwnPropsClass, { own: 'string', forwarded: 'string' });
     React.createElement(ConnectedWithOwnPropsClass, { own: 'string', forwarded: 'string' });
-    
+
     // This should not compile, it is missing ForwardedProps
     React.createElement(ConnectedWithOwnPropsClass, { own: 'string' }); // $ExpectError
     React.createElement(ConnectedWithOwnPropsStateless, { own: 'string' }); // $ExpectError

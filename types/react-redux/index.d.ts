@@ -33,7 +33,6 @@ type ComponentClass<P> = React.ComponentClass<P>;
 type StatelessComponent<P> = React.StatelessComponent<P>;
 type Component<P> = React.ComponentType<P>;
 type ReactNode = React.ReactNode;
-type Store<S> = Redux.Store<S>;
 type Dispatch<A extends Redux.Action = Redux.AnyAction> = Redux.Dispatch<A>;
 type ActionCreator<A> = Redux.ActionCreator<A>;
 
@@ -54,7 +53,7 @@ interface AdvancedComponentDecorator<TProps, TOwnProps> {
  * - it is present in both DecorationTargetProps and InjectedProps
  * - DecorationTargetProps[P] extends InjectedProps[P]
  * ie: decorated component can accept more types than decorator is injecting
- * 
+ *
  * For decoration, inject props or ownProps are all optionnaly
  * required by the decorated (right hand side) component.
  * But any property required by the decorated component must extend the injected property
@@ -317,7 +316,7 @@ export interface ProviderProps {
     /**
      * The single Redux store in your application.
      */
-    store?: Store<any>;
+    store?: Redux.Store<any, any>;
     children?: ReactNode;
 }
 
